@@ -7,7 +7,7 @@ const HeaderLoggedIn = () => {
 
 
     const signOut = () => {
-        localStorage.removeItem('token')
+        localStorage.clear()
         window.location.href = '/'
     }
 
