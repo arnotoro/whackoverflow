@@ -1,7 +1,8 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { Form, Button, Row, Col} from 'react-bootstrap'
+import { useState, useEffect, Alert } from 'react'
+import { Form, Button, Row, Col, Toast} from 'react-bootstrap'
 import '../assets/styles/register.css'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const initialState = {
@@ -23,6 +24,7 @@ const passwordValidator = {
 };
 
 const Register = () => {
+    const navigate = useNavigate();
     // validate form
     const [validated, setValidated] = useState(false);
     const [formData, setFormData] = useState(initialState);
@@ -34,6 +36,7 @@ const Register = () => {
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
+
         setFormData({ ...formData, [name]: value });
 
         if (name === 'password') {
@@ -52,7 +55,7 @@ const Register = () => {
     };
     const handleSubmit = (event) => {
         const form = event.target;
-        const data = new FormData(form);
+
 
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -61,10 +64,31 @@ const Register = () => {
 
         setValidated(true);
         if (form.checkValidity() === true) {
-            // send data to backend
-            console.log(data);
-            console.log('hello world')
+            event.preventDefault();
 
+            // send data to backend
+            console.log('hello world')
+            
+            fetch('/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+                mode: 'cors',
+            })
+            .then((res) => {
+                if (res.status === 200) {
+                    navigate('/login');
+                }
+                else {
+                    alert('Something went wrong. Please try again.');
+                }
+            })
+            .then((data) => {
+                console.log(data);
+            }
+            )
         }
     };
 
@@ -193,11 +217,10 @@ const Register = () => {
                         </ul>
                     </Form.Text>
                 </Row>
-
-
                 <Row className='mb-2 mt-1 ms-1 me-1'>
                     <Button type="submit" variant='primary' className="mb-2 me-2" disabled={Object.values(passwordError).includes(false)}>Register</Button>
                 </Row >
+                <span>Already have an account? <Link to="/login">Login</Link></span>
             </Form>
         </div>
       );

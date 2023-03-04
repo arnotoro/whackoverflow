@@ -1,6 +1,7 @@
 import {React, useState} from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import '../assets/styles/login.css'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
@@ -68,7 +69,7 @@ const Login = () => {
         <Row className='mb-2 mt-1 ms-1 me-1'>
           <Button type="submit" variant='primary' className="mb-2 me-2">Login</Button>
         </Row >
-
+        <span>New user? <Link to="/register">Register</Link></span>
       </Form>
     </div>
   )
