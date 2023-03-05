@@ -36,11 +36,12 @@ const Snippet = () => {
 
         await fetch(`/api/snippets/${id}/comments`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Authorization': `Bearer ${loggedUserToken}`,
                 'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({comment}),
+                body: JSON.stringify({comment: comment}),
             })
             .then(res => res.json())
             .then(data => {
