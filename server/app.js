@@ -24,7 +24,7 @@ app.use('/api', apiRouter);
 
 // connect to mongoDB
 const mongoDB = 'mongodb://127.0.0.1:27017/codesnipper';
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, {});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 

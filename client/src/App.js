@@ -43,6 +43,7 @@ function App() {
             <Route path="/profile" element={<> <HeaderLoggedIn /> <Profile /> <Footer /> </>} />
             <Route path="/login" element={ <Navigate to="/home" /> } />
             <Route path="/register" element={ <Navigate to="/home" /> } />
+            <Route path="/create" element={<> <HeaderLoggedIn /> <SnippetForm /> <Footer /> </>} />
             </Routes>
         </div>
       </Router>

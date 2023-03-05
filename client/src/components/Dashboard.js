@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import Card from 'react-bootstrap/Card'
 import '../assets/styles/home.css'
 
 const Dashboard = (props) => {
