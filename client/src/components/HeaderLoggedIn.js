@@ -31,7 +31,10 @@ const HeaderLoggedIn = () => {
                 </LinkContainer>
                 <LinkContainer to="/profile">
                     <Nav.Link>Profile</Nav.Link>
-                    </LinkContainer>
+                </LinkContainer>
+                <LinkContainer to="/create">
+                    <Nav.Link>Create Snippet</Nav.Link>
+                </LinkContainer>
             </Nav>
             <Nav>
                 <Form className="d-flex" role="search">

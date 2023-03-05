@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-require('../auth/passport')(passport);
-require('dotenv').config();
+
 
 // Load User model
 const User = require('../models/Users');
-const Users = require('../models/Users');
+const Snippet = require('../models/Snippets');
+require('../auth/passport')(passport);
 
 // @route   GET api/users/test
 router.get('/users/test', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -101,8 +101,8 @@ router.post('/users/login', async (req, res) => {
                 }
                 // if the password is correct we create a jwt auth token
                 else if (isMatch) {
-                    const payload = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: 3600});
-                    res.status(200).json({success: true, token: `Bearer ${payload}`, userName: user.userName, userID: user._id});
+                    const payload = jwt.sign({email: user.email}, process.env.JWT_SECRET, {expiresIn: 3600});
+                    res.status(200).json({success: true, token: payload, userName: user.userName, userID: user._id});
                 }
                 // if the password is incorrect we notify the frontend
                 else {
@@ -120,6 +120,42 @@ router.post('/users/login', async (req, res) => {
     });
 });
 
+// @route   GET api/snippets
+router.get('/snippets', async (req, res) => {
+    await Snippet.find()
+    .then((snippets) => {
+        res.status(200).json({success: true, json: snippets});
+    })
+    .catch((err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({success: false, text:'Something went wrong. Please try again later.'});
+        }
+    });
+});
+
+// @route   POST api/snippets
+router.post('/snippets', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    // frontend validates the data so we don't have to do it here
+    const { title, code, userID } = req.body;
+
+    // save snippet to the database
+    const newSnippet = new Snippet({
+        title: title,
+        code: code,
+        userID: userID,
+        timeStamp: Date.now()
+    });
+
+    await newSnippet.save()
+    .then((snippet) => {
+        res.status(200).json({success: true, json: snippet, text:'Snippet created successfully.'});
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).json({success: false, text:'Something went wrong. Please try again later.'});
+    });
+});
 
 
 module.exports = router;

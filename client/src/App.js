@@ -1,14 +1,16 @@
+import { React, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+
 import './App.css';
 import Header from './components/Header';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
 import Footer from './components/Footer';
 import HeaderLoggedIn from './components/HeaderLoggedIn';
 import Profile from './components/Profile';
-import { React, useState, useEffect } from 'react';
 import Home from './components/Home';
+import SnippetForm from './components/SnippetForm';
 
 function App() {
   // check if the user is logged in
