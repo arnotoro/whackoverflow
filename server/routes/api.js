@@ -120,6 +120,8 @@ router.post('/users/login', async (req, res) => {
     });
 });
 
+/// SNIPPET ROUTES START HERE ///
+
 // @route   GET api/snippets
 router.get('/snippets', async (req, res) => {
     await Snippet.find()
@@ -145,6 +147,7 @@ router.post('/snippets', passport.authenticate('jwt', {session: false}), async (
         code: code,
         userID: userID,
         userName: userName,
+        comments: [],
     });
     console.log(newSnippet);
     await newSnippet.save()
@@ -154,6 +157,44 @@ router.post('/snippets', passport.authenticate('jwt', {session: false}), async (
     .catch((err) => {
         console.log(err);
         res.status(500).json({success: false, text:'Something went wrong. Please try again later.'});
+    });
+});
+
+// @route   GET api/snippets/:id
+router.get('/snippets/:id', async (req, res) => {
+    await Snippet.findById(req.params.id)
+    .then((snippet) => {
+        res.status(200).json({success: true, json: snippet});
+    })
+    .catch((err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({success: false, text:'Something went wrong. Please try again later.'});
+        }
+    });
+});
+
+
+// @route   POST api/snippets/:id/comments
+router.post('/snippets/:id/comments', passport.authenticate('jwt', {session: false}), async (req, res) => {
+    const { comment } = req.body;
+    console.log(req.body);
+
+    await Snippet.findById(req.params.id)
+    .then((snippet) => {
+        if (!snippet) {
+            res.status(404).json({success: false, text:'Snippet not found.'});
+        }
+
+        snippet.comments.push(comment);
+        snippet.save()
+        res.status(200).json({success: true, json: comment});
+    })
+    .catch((err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).json({success: false, text:'Something went wrong. Please try again later.'});
+        }
     });
 });
 

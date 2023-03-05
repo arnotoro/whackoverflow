@@ -11,15 +11,7 @@ const SnippetSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    comments: [{
-        userID: String,
-        userName: String,
-        comment: String,
-        date: {
-            type: Date,
-            default: Date.now
-        }
-    }]
+    comments:  Array
 });
 
 module.exports = mongoose.model('Snippet', SnippetSchema);

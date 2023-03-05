@@ -1,48 +1,63 @@
 # About
 This is the project work for the course "Advanced Web Applications" at LUT University. The project is a fullstack web application for sharing code snippets. The application is built using the MERN stack (MongoDB, Express, React, Node.js).
 
-## Requirements
-- Implementation of backend with Node.js
-    - You can of course use Express, Meteor or any other additional framework
-- Utilization of database
-    - MongoDB
-- Authentication frontend and backend
-    - You can use JWT or session based authorization
-    - Users have to have an option to register and login
-    - Only authenticated users can post, comment (or vote)
-- Features
-    - Authenticated users can:
-        - Post new code snippets
-        - Comment on existing posts
-    - Non-authenticated users can see posts, comments (and vote counts)
-    - There is some page listing all the post, after opening one post, comments are also listed
-- Responsive design
-    - The app needs to be usable with mobile devices and desktop browsers
-        - Use of Materialize or Bootstrap is recommended
-- Documentation
-    - There needs to be documentation describing the technology choices, installation guidelines and user manual
-    - Also list the features you have implemented and the number of points you are aiming at
+## Requirements and points proposal
 
+### Mandatory requirements
+- [x] Implementation of backend with Express.js
+- [x] Utilization of database (MongoDB)
+- [x] Authentication
+  - [x] Users have an option to register and login
+  - [x] JSON Web Token (JWT) based authorization
+  - [x] Only authenticated users can post and comment
+- [x] Features
+  - [x] Authenticated users can:
+    - [x] Post new code snippets
+    - [x] Comment on existing posts
+  - [x] Non-authenticated users can see posts and comments
+  - [x] There is a page listing all the posts and after opening one post, comments are also listed
+- [x] Responsive design
+  - [x] App needs to be usable on mobile devices and desktop browsers
+- [x] Documentation (README.md)
+  - [x] Technology choices
+  - [x] Installation guidelines
+  - [x] User manual
+  - [x] Features implemented
+  - [x] Number of points
 
+### Optional requirements
+- [x] Frontend with React.js Bootstrap
+- [x] Timestamp when a post is created
 
-## Features to be implemented
-- [ ] User authentication front and backend
-  - [ ] Frontend
-    - [x] Users can register
-    - [x] Users can login
-    - [ ] Authenticated users can post code snippets and comment or vote on them
-    - [ ] Non-authenticated users can view code snippets and comments
-    - [ ] Users can edit their own code snippets and comments
-    - [ ] Login with Google, Facebook, etc.
-    - [ ] Admin account that can edit all posts and delete them
-  - [ ] Backend
-    - [ ] Users can register
-    - [ ] Users can login
-    - [ ] Authenticated users can post code snippets and comment or vote on them
-    - [ ] Non-authenticated users can view code snippets and comments
-    - [ ] Users can edit their own code snippets and comments
-    - [ ] Login with Google, Facebook, etc.
-    - [ ] Admin account that can edit all posts and delete them
-- [ ] Highlight library for code snippets
-- [ ] Search functionality for code snippets
-- [ ] User profiles
+### Points proposal
+- 25 points for mandatory requirements
+- 5 points for utilization of a frontside framework (React.js)
+- 1 point for timestamp when a post is created
+
+#### Total points: 31
+
+## Technology choices
+- Frontend: React.js (with Bootstrap)
+- Backend: Express.js
+- Database: MongoDB
+- Authentication: JSON Web Token (JWT) with Passport.js and Bcrypt.js
+  
+## Installation guidelines
+1. Clone the repository `git clone https://github.com/arnotoro/whackoverflow`
+2. Make sure you are using the latest npm version by typing `nvm use node` and then install dependencies using `npm install`
+3. Create a .env file in the ./server repository with a key value pair `JWT_SECRET=ensaatatakoskaanvalmiiksi`
+4. Run the application `npm run dev`
+5. Enjoy!
+
+## User manual
+### Creating a user
+1. Click the "Register" button in the navigation bar
+2. Fill in your information and click "Register"
+3. Login with your credentials
+4. Start sharing code snippets and comment on other people's posts!
+   
+### Sharing a code snippet
+1. Click the "Create a new Snippet" button in the navigation bar
+2. Give your snippet a title
+3. Write your code snippet. (Supports text indentation for code blocks)
+4. Post your snippet

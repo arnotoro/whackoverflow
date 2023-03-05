@@ -10,7 +10,6 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
-var snippetRouter = require('./routes/snippets');
 
 var app = express();
 
@@ -23,7 +22,6 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
-app.use('/snippets', snippetRouter);
 
 // connect to mongoDB
 const mongoDB = 'mongodb://127.0.0.1:27017/codesnipper';

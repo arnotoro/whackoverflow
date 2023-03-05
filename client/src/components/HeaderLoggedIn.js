@@ -29,18 +29,18 @@ const HeaderLoggedIn = () => {
                 <LinkContainer to="/home">
                     <Nav.Link>Home</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/profile">
+                {/* <LinkContainer to="/profile">
                     <Nav.Link>Profile</Nav.Link>
-                </LinkContainer>
+                </LinkContainer> */}
                 <LinkContainer to="/create">
-                    <Nav.Link>Create Snippet</Nav.Link>
+                    <Nav.Link>Create a new Snippet</Nav.Link>
                 </LinkContainer>
             </Nav>
             <Nav>
-                <Form className="d-flex" role="search">
+                {/* <Form className="d-flex" role="search">
                     <FormControl type="search" placeholder="Search for snippets" className="me-2" aria-label="Search" />
                     <Button variant="outline-light">Search</Button>
-                </Form>
+                </Form> */}
                 <LinkContainer onClick={signOut} to="/">
                 <Nav.Link>Sign Out</Nav.Link>
                 </LinkContainer>

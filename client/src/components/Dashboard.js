@@ -1,14 +1,14 @@
 import React from 'react'
 import '../assets/styles/home.css'
-import Snippets from './Snippets/Snippet'
+import SnippetList from './Snippets/SnippetList';
 
 const Dashboard = (props) => {
   const userName = localStorage.getItem('userName');
  
     return (
       <div className="ms-2 home">
-        <h1>Welcome to CodeSnipper {userName.slice(0, 1).toUpperCase() + userName.slice(1)}!</h1>
-          <Snippets />
+        <h1>Welcome to CodeSnipper user: <b>{userName.slice(0, 1).toUpperCase() + userName.slice(1)}</b> !</h1>
+          <SnippetList />
       </div>
     );
 

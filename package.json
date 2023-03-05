@@ -5,10 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "server": "npm run dev --prefix server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server:dev": "npm run dev --prefix server",
+    "server": "npm start --prefix server",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
     "install": "cd client && npm install",
-    "preinstall": "cd server && npm install"
+    "preinstall": "cd server && npm install",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",

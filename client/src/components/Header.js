@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar, NavDropdown, NavLink } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles/header.css'
 import { LinkContainer } from 'react-router-bootstrap';

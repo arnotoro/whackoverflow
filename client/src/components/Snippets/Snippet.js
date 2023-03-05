@@ -1,66 +1,108 @@
 import React from 'react'
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card'
 import '../../assets/styles/snippets.css'
-import { Button } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import { useParams } from 'react-router-dom';
+import CommentForm from './CommentForm';
+
 
 const Snippet = () => {
+    const { id } = useParams();
+    const [snippet, setSnippets] = useState([])
+    const [authenticated, setAuthenticated] = useState(false);
+    const loggedUserToken = localStorage.getItem('authToken');
+    const [comments, setComments] = useState([]);
 
-    const [snippets, setSnippets] = useState([])
-
+    // check if the user is logged in and fetch the snippet data
     useEffect(() => {
-        const fetchSnippets = async () => {
-            let response = await fetch('api/snippets', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }})
-            response = await response.json();
-            console.log(response.json);
-            setSnippets(response.json);
-        };
-        fetchSnippets();
+        if (loggedUserToken) {
+            setAuthenticated(true);
+        }
+        fetch(`/api/snippets/${id}`)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                console.log(response);
+            }
+        })
+        .then(data => {
+            setSnippets(data.json)
+            setComments(data.json.comments)
+        });
     }, []);
 
+    const handleCommentSubmit = async (comment) => {
 
-    if (snippets.length === 0) {
+        await fetch(`/api/snippets/${id}/comments`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${loggedUserToken}`,
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({comment}),
+            })
+            .then(res => res.json())
+            .then(data => {
+                setComments([...comments, data.json])
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            window.location.reload(true);
+    }
+
+    if (!authenticated) {
+
         return (
             <div>
-                <h3>No snippets posted yet :(</h3>
+                <Card key={snippet._id} className="mb-2">
+                    <Card.Body>
+                        <Card.Title as='h3'>{snippet.title}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">Submitted by {snippet.userName}
+                        , at {new Date(snippet.date).toLocaleString('fi-FI', {timeZone: 'Europe/Helsinki', hour12: false})}</Card.Subtitle>
+                        <Card.Text as="pre">
+                            {snippet.code}
+                        </Card.Text>
+
+                        <Card.Title as={'h4'}>Comments</Card.Title>
+                        <ul>
+                            {comments.map((comment, index) => (
+                                <li>{comment}</li>
+                            ))}
+                        </ul>
+                    </Card.Body>
+                </Card>
             </div>
         )
     } else {
         return (
             <div>
-                <h3>Here are the latest snippets posted: </h3>
-                {snippets.map((snippet) => (
-                    <Card key={snippet._id} className="mb-2">
-                        <Card.Body>
-                            <Card.Title as='h3'>{snippet.title}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Submitted by {snippet.userName}
-                            , at {new Date(snippet.date).toLocaleString('fi-FI', {timeZone: 'Europe/Helsinki', hour12: false})}</Card.Subtitle>
-                            <Card.Text as="pre">
-                                {snippet.code}
-                            </Card.Text>
-                            <LinkContainer to={`/snippets/${snippet._id}`}>
-                                <Button size="sm">View comments</Button>
-                            </LinkContainer>
+                <Card key={snippet._id} className="mb-2">
+                    <Card.Body>
+                        <Card.Title as='h3'>{snippet.title}</Card.Title>
+                        <Card.Subtitle className="mb-2 text-muted">Submitted by {snippet.userName}
+                        , at {new Date(snippet.date).toLocaleString('fi-FI', {timeZone: 'Europe/Helsinki', hour12: false})}</Card.Subtitle>
+                        <Card.Text as="pre">
+                            {snippet.code}
+                        </Card.Text>
 
+                        <Card.Title as={'h4'}>Comments</Card.Title>
 
-                        </Card.Body>
-                    </Card>
-                ))}
+                        <ul>
+                            {comments.map((comment, index) => (
+                                <li>{comment}</li>
+                            ))}
+                        </ul>
+                        <CommentForm className="mt-2" onSubmit={handleCommentSubmit}/>
+                    </Card.Body>
+                </Card>
+
             </div>
-        )
-    }
+            )
+        }
 }
 
-export default function App() {
 
-    return(
-        <Suspense fallback="loading">
-            <Snippet />
-        </Suspense>
-    )
-}
+export default Snippet;
