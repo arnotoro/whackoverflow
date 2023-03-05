@@ -1,5 +1,6 @@
 .home {
-    align-items: center;
+    align-items: left;
     display: flex;
     flex-direction: column;
+    margin-bottom: 25px;
 }

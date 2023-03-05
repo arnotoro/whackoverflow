@@ -5,11 +5,21 @@ const Schema = mongoose.Schema;
 const SnippetSchema = new Schema({
     title: String,
     code: String,
+    userID: String,
+    userName: String,
     date: {
         type: Date,
         default: Date.now
     },
-    user: Number
+    comments: [{
+        userID: String,
+        userName: String,
+        comment: String,
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 });
 
 module.exports = mongoose.model('Snippet', SnippetSchema);

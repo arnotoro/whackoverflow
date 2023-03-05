@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import HeaderLoggedIn from './components/HeaderLoggedIn';
 import Profile from './components/Profile';
 import Home from './components/Home';
-import SnippetForm from './components/SnippetForm';
+import SnippetForm from './components/Snippets/SnippetForm';
 
 function App() {
   // check if the user is logged in

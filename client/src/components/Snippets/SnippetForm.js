@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Row } from 'react-bootstrap';
-import '../assets/styles/snippets.css';
+import '../../assets/styles/snippets.css';
 import { useNavigate } from 'react-router-dom';
 
 function SnippetForm() {
@@ -9,6 +9,7 @@ function SnippetForm() {
   const [validated, setValidated] = useState(false);
   const userID = localStorage.getItem('userID');
   const token = localStorage.getItem('authToken');
+  const userName = localStorage.getItem('userName');
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -30,7 +31,7 @@ function SnippetForm() {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title, code, userID })
+        body: JSON.stringify({ title, code, userID, userName })
       })
         .then(response => {
           if (response.status === 200) {
@@ -46,9 +47,17 @@ function SnippetForm() {
   };
 };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     name === 'title' ? setTitle(value) : setCode(value);
+  };
+
+  const handleTab = (event) => {
+    // if tab is pressed, add 4 spaces to the code
+    if (event.keyCode === 9) {
+      event.preventDefault();
+      setCode(code + '    ');
+    }
   };
 
   return (
@@ -88,6 +97,7 @@ function SnippetForm() {
                       name="code"
                       value={code}
                       onChange={handleChange}
+                      onKeyDown={handleTab}
                       placeholder="Enter your code here"
                       required
                   />

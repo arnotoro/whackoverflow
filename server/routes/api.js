@@ -137,19 +137,19 @@ router.get('/snippets', async (req, res) => {
 // @route   POST api/snippets
 router.post('/snippets', passport.authenticate('jwt', {session: false}), async (req, res) => {
     // frontend validates the data so we don't have to do it here
-    const { title, code, userID } = req.body;
-
+    const { title, code, userID, userName } = req.body;
+    console.log(req.body, userName);
     // save snippet to the database
     const newSnippet = new Snippet({
         title: title,
         code: code,
         userID: userID,
-        timeStamp: Date.now()
+        userName: userName,
     });
-
+    console.log(newSnippet);
     await newSnippet.save()
     .then((snippet) => {
-        res.status(200).json({success: true, json: snippet, text:'Snippet created successfully.'});
+        res.status(200).json({success: true, json: snippet});
     })
     .catch((err) => {
         console.log(err);
